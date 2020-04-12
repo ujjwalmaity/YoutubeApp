@@ -1,0 +1,73 @@
+/*****JAVA - UJJWAL*****/
+youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+    @Override
+    public void onReady(@NonNull final YouTubePlayer youTubePlayer) {
+
+        String videoId = "E4ZJxhyAaH8";
+        youTubePlayer.cueVideo(videoId, 0);
+        //youTubePlayer.loadVideo(videoId, 0);
+
+        findViewById(R.id.play).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                youTubePlayer.play();
+            }
+        });
+
+        findViewById(R.id.pause).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                youTubePlayer.pause();
+            }
+        });
+    }
+});
+
+
+
+/*****KOTLIN - SUBRATA*****/
+holder.youtube_player_view.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
+    override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
+        youTubePlayer.loadVideo(itemdata.getString("response").toString(), itemdata.get("ans_start").toString().toFloat())
+        //youTubePlayer.pause()
+        holder.youtube_player_view.setTag(itemdata.get("ans_end").toString().toFloat())
+
+        youTubePlayer.addListener(object : YouTubePlayerListener {
+            override fun onApiChange(youTubePlayer: YouTubePlayer) {
+
+            }
+
+            override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) {
+                if (holder.youtube_player_view.getTag().toString().toFloat() <= second) {
+                    youTubePlayer.pause()
+                }
+            }
+
+            override fun onError(youTubePlayer: YouTubePlayer, error: PlayerConstants.PlayerError) {
+            }
+
+            override fun onPlaybackQualityChange(youTubePlayer: YouTubePlayer, playbackQuality: PlayerConstants.PlaybackQuality) {
+            }
+
+            override fun onPlaybackRateChange(youTubePlayer: YouTubePlayer, playbackRate: PlayerConstants.PlaybackRate) {
+            }
+
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+            }
+
+            override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerConstants.PlayerState) {
+            }
+
+            override fun onVideoDuration(youTubePlayer: YouTubePlayer, duration: Float) {
+            }
+
+            override fun onVideoId(youTubePlayer: YouTubePlayer, videoId: String) {
+            }
+
+            override fun onVideoLoadedFraction(youTubePlayer: YouTubePlayer, loadedFraction: Float) {
+            }
+
+        })
+
+    }
+})

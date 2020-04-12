@@ -14,27 +14,21 @@
         android:layout_height="wrap_content"
         app:showFullScreenButton="false" />
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/relative_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/youtube_player_view"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@id/youtube_player_view">
 
-        <Button
-            android:id="@+id/play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_weight="1"
-            android:text="PLAY" />
+        <ImageView
+            android:id="@+id/youtube_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-        <Button
-            android:id="@+id/pause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_weight="1"
-            android:text="PAUSE" />
-    </LinearLayout>
-
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/youtube_play" />
+    </RelativeLayout>
 </RelativeLayout>

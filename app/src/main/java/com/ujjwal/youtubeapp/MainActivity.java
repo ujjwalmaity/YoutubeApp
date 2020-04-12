@@ -5,44 +5,51 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 public class MainActivity extends AppCompatActivity {
 
+    RelativeLayout relativeLayout;
+    ImageView imageView;
     YouTubePlayerView youTubePlayerView;
+    String videoId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        videoId = "Az-mGR-CehY";
+
+        imageView = findViewById(R.id.youtube_thumbnail);
+        Glide.with(this)
+                .load("https://img.youtube.com/vi/" + videoId + "/mqdefault.jpg")
+                .into(imageView);
+
         youTubePlayerView = findViewById(R.id.youtube_player_view);
         getLifecycle().addObserver(youTubePlayerView);
 
-        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+        relativeLayout = findViewById(R.id.relative_layout);
+        relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onReady(@NonNull final YouTubePlayer youTubePlayer) {
+            public void onClick(View v) {
+                relativeLayout.setVisibility(View.GONE);
+                loadYoutubeVideo();
+            }
+        });
+    }
 
-                String videoId = "E4ZJxhyAaH8";
-                youTubePlayer.cueVideo(videoId, 0);
-//                youTubePlayer.loadVideo(videoId, 0);
-
-                findViewById(R.id.play).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        youTubePlayer.play();
-                    }
-                });
-
-                findViewById(R.id.pause).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        youTubePlayer.pause();
-                    }
-                });
+    private void loadYoutubeVideo() {
+        youTubePlayerView.getYouTubePlayerWhenReady(new YouTubePlayerCallback() {
+            @Override
+            public void onYouTubePlayer(@NonNull YouTubePlayer youTubePlayer) {
+                youTubePlayer.loadVideo(videoId, 0);
             }
         });
     }
